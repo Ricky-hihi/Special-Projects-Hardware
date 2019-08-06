@@ -10,7 +10,6 @@ int blank ;                // 排大小所需暫存器
 byte j ;                   // 記錄次數
 byte k ;                   // 符合條件才加
 byte led = digitalRead(7) ;
-byte Level = digitalRead(5) ;
 byte g ;
 
 // 螢幕
@@ -92,6 +91,14 @@ void loop() {
 
   // 把電量轉成百分比
   val = map(analogRead(analogPin),720,850,0,100) ;
+  if (val < 0 or val > 100){
+    if (val < 0){
+      val = 0 ;
+      }
+    if (val > 100){
+      val = 100 ;
+      }
+    }
   
   // 填入陣列 MyArray 中
   for (byte i = 0 ; i<11 ; i++){
@@ -137,27 +144,11 @@ void loop() {
             digitalWrite(7,LOW) ;
             digitalWrite(8,LOW) ;
             }
-        Serial.print("g: ") ;Serial.println(g) ;
         Serial.print("模式(尿袋 1 、 點滴 2): ") ;Serial.println(digitalRead(3)) ;
         Serial.print("k: ") ;Serial.println(k) ;
         Serial.print("Induction: ") ;Serial.println(digitalRead(7)) ;
         j = 0 ; k = 0 ;
-        
-        // 如感電量大於 100 或小於 0
-        if (MyArray[5]<0 or MyArray[5]>100){
-          
-          // 電量小於 0 則顯示 0
-          if (MyArray[5]<0){
-            Serial.print("battery capacity : ") ;Serial.print(0) ;Serial.println("%") ;
-            }
-            
-          // 電量大於 100 則顯示 100
-          if (MyArray[5]>100){
-            Serial.print("battery capacity : ") ;Serial.print(100) ;Serial.println("%") ;
-            }
-          }else{
-            Serial.print("battery capacity : ") ;Serial.print(MyArray[5]) ;Serial.println("%") ;
-            }
+        Serial.print("battery capacity : ") ;Serial.print(MyArray[5]) ;Serial.println("%") ;
         }
     break ; 
 
@@ -185,22 +176,7 @@ void loop() {
         Serial.print("k: ") ;Serial.println(k) ;
         Serial.print("Induction: ") ;Serial.println(digitalRead(7)) ;
         j = 0 ; k = 0 ;
-        
-        // 如感電量大於 100 或小於 0
-        if (MyArray[5]<0 or MyArray[5]>100){
-          
-          // 電量小於 0 則顯示 0
-          if (MyArray[5]<0){
-            Serial.print("battery capacity : ") ;Serial.print(0) ;Serial.println("%") ;
-            }
-            
-          // 電量大於 100 則顯示 100
-          if (MyArray[5]>100){
-            Serial.print("battery capacity : ") ;Serial.print(100) ;Serial.println("%") ;
-            }
-          }else{
-            Serial.print("battery capacity : ") ;Serial.print(MyArray[5]) ;Serial.println("%") ;
-            }
+        Serial.print("battery capacity : ") ;Serial.print(MyArray[5]) ;Serial.println("%") ;
         }
     break ; 
     }
